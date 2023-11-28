@@ -72,47 +72,79 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: TabBarView(controller: _tabController, children: [
                 Column(
                   children: [
-                    Container(
-                      height: size.height * 0.45,
-                      color: Colors.amber,
-                    ),
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Latest Shoes',
-                              style: appstyle(
-                                22,
-                                Colors.black,
-                                FontWeight.bold,
-                              ),
+                    SizedBox(
+                      height: size.height * 0.42,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 10),
+                              width: size.width * 0.5,
+                              height: size.height,
+                              color: Colors.red,
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Show All',
-                                  style: appstyle(
-                                    22,
-                                    Colors.black,
-                                    FontWeight.w500,
-                                  ),
+                          );
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 10, 5, 15),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Latest Shoes',
+                                style: appstyle(
+                                  22,
+                                  Colors.black,
+                                  FontWeight.bold,
                                 ),
-                                const Icon(
-                                  AntDesign.caretright,
-                                  size: 20,
-                                )
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Show All',
+                                    style: appstyle(
+                                      22,
+                                      Colors.black,
+                                      FontWeight.w500,
+                                    ),
+                                  ),
+                                  const Icon(
+                                    AntDesign.caretright,
+                                    size: 20,
+                                  )
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                    Container(
+                    SizedBox(
                       height: size.height * 0.1,
-                      color: Colors.red,
-                    )
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                                width: size.width * 0.28,
+                                height: size.height,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[600],
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
                 Column(
