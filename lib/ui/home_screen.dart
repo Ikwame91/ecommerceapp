@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         height: 25,
                       ),
                       TabBar(
+                          padding: EdgeInsets.zero,
                           indicatorSize: TabBarIndicatorSize.label,
                           indicatorColor: Colors.transparent,
                           controller: _tabController,
@@ -83,10 +84,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             scrollDirection: Axis.horizontal,
                             itemCount: 5,
                             itemBuilder: (context, index) {
-                              return ProductCard(
+                              return const ProductCard(
                                 price: '\$34.00',
                                 category: 'Men Shoes',
-                                name: 'Nike Air Max 270',
+                                name: 'Nike Air Max 270 ',
                                 id: '1',
                                 image:
                                     "https://d326fntlu7tb1e.cloudfront.net/uploads/dc18ed7c-2061-43e7-9efa-a5fba1b2a1dd-IG2753.webp",
@@ -140,24 +141,28 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  width: size.width * 0.28,
-                                  height: size.height,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black.withOpacity(0.6),
-                                          blurRadius: 10,
-                                          spreadRadius: 1,
-                                          offset: const Offset(0, 3))
-                                    ],
-                                  ),
-                                  child: CachedNetworkImage(
-                                    imageUrl:
-                                        "https://d326fntlu7tb1e.cloudfront.net/uploads/dc18ed7c-2061-43e7-9efa-a5fba1b2a1dd-IG2753.webp",
-                                  ),
-                                ),
+                                    width: size.width * 0.28,
+                                    height: size.height,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.6),
+                                            blurRadius: 10,
+                                            spreadRadius: 1,
+                                            offset: const Offset(0, 3))
+                                      ],
+                                    ),
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          "https://d326fntlu7tb1e.cloudfront.net/uploads/dc18ed7c-2061-43e7-9efa-a5fba1b2a1dd-IG2753.webp",
+                                      placeholder: (context, url) =>
+                                          const CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    )),
                               );
                             },
                           ),

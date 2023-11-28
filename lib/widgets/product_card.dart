@@ -45,7 +45,7 @@ class _ProductCardState extends State<ProductCard> {
               Stack(
                 children: [
                   Container(
-                    height: size.height * 0.23,
+                    height: size.height * 0.2,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(
@@ -65,14 +65,16 @@ class _ProductCardState extends State<ProductCard> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 10, right: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       widget.name,
                       style:
-                          appstyletwo(36, Colors.black, FontWeight.bold, 1.1),
+                          appstyletwo(31, Colors.black, FontWeight.bold, 1.0),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                     ),
                     size.height > 700
                         ? const SizedBox(
