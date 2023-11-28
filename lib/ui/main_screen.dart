@@ -24,7 +24,6 @@ class MainScreen extends StatelessWidget {
       builder: (context, mainScreenNotifier, child) {
         return Scaffold(
           body: pageList[mainScreenNotifier.currentIndex],
-          backgroundColor: Colors.grey[100],
           bottomNavigationBar: SafeArea(
             child: Container(
               padding: const EdgeInsets.all(12),
