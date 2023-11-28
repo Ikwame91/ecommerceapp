@@ -3,8 +3,8 @@ import 'package:flutter/services.dart' as the_bundle;
 
 class Helper {
   Future<List<Sneakers>> getMaleSneakers() async {
-    final data = await the_bundle.rootBundle
-        .loadString("assets/json/assets/json/men_shoes.json");
+    final data =
+        await the_bundle.rootBundle.loadString("assets/json/men_shoes.json");
     final maleList = sneakersFromJson(data);
     return maleList;
   }
@@ -24,8 +24,8 @@ class Helper {
   }
 
   Future<Sneakers> getMaleSneakersById(String id) async {
-    final data = await the_bundle.rootBundle
-        .loadString("assets/json/assets/json/men_shoes.json");
+    final data =
+        await the_bundle.rootBundle.loadString("assets/json/men_shoes.json");
     final maleList = sneakersFromJson(data);
 
     final sneaker = maleList.firstWhere((sneaker) => sneaker.id == id);
@@ -33,8 +33,8 @@ class Helper {
   }
 
   Future<Sneakers> getFemaleSneakersById(String id) async {
-    final data = await the_bundle.rootBundle
-        .loadString("assets/json/assets/json/women_shoes.json");
+    final data =
+        await the_bundle.rootBundle.loadString("assets/json/women_shoes.json");
     final femaleList = sneakersFromJson(data);
 
     final sneaker = femaleList.firstWhere((sneaker) => sneaker.id == id);
@@ -42,8 +42,8 @@ class Helper {
   }
 
   Future<Sneakers> getKidsSneakersById(String id) async {
-    final data = await the_bundle.rootBundle
-        .loadString("assets/json/assets/json/women_shoes.json");
+    final data =
+        await the_bundle.rootBundle.loadString("assets/json/kid_shoes.json");
     final kidList = sneakersFromJson(data);
 
     final sneaker = kidList.firstWhere((sneaker) => sneaker.id == id);
