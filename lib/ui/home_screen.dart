@@ -1,10 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_app/components/home_component.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
 import 'package:ecommerce_app/models/sneaker_model.dart';
 import 'package:ecommerce_app/services/helper.dart';
-import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -101,130 +99,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 padding: EdgeInsets.only(top: size.height * 0.3),
                 child: Container(
                   padding: const EdgeInsets.only(left: 12),
-                  child: TabBarView(controller: _tabController, children: [
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: size.height * 0.42,
-                          child: FutureBuilder(
-                            future: _male,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const CircularProgressIndicator();
-                              } else if (snapshot.hasError) {
-                                return Text("Error: ${snapshot.error}");
-                              } else {
-                                final male = snapshot.data;
-                                return ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: male!.length,
-                                  itemBuilder: (context, index) {
-                                    final shoe = snapshot.data![index];
-                                    return ProductCard(
-                                      price: "\$${shoe.price}",
-                                      category: shoe.category,
-                                      name: shoe.name,
-                                      id: shoe.id,
-                                      image: shoe.imageUrl[0],
-                                    );
-                                  },
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 10, 5, 15),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Latest Shoes',
-                                    style: appstyle(
-                                      22,
-                                      Colors.black,
-                                      FontWeight.bold,
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Show All',
-                                        style: appstyle(
-                                          22,
-                                          Colors.black,
-                                          FontWeight.w500,
-                                        ),
-                                      ),
-                                      const Icon(
-                                        AntDesign.caretright,
-                                        size: 20,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.1,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                    width: size.width * 0.28,
-                                    height: size.height,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.6),
-                                            blurRadius: 10,
-                                            spreadRadius: 1,
-                                            offset: const Offset(0, 3))
-                                      ],
-                                    ),
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                          "https://d326fntlu7tb1e.cloudfront.net/uploads/dc18ed7c-2061-43e7-9efa-a5fba1b2a1dd-IG2753.webp",
-                                      placeholder: (context, url) =>
-                                          const CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                    )),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          height: size.height * 0.45,
-                          color: Colors.green,
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          height: size.height * 0.45,
-                          color: Colors.blue,
-                        )
-                      ],
-                    )
-                  ]),
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      HomeComponent(size: size, male: _male),
+                      HomeComponent(size: size, male: _female),
+                      HomeComponent(size: size, male: _kids),
+                    ],
+                  ),
                 ),
               )
             ],
