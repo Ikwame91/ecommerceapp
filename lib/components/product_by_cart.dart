@@ -1,11 +1,9 @@
+import 'package:ecommerce_app/components/men_latest_shoes.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
 import 'package:ecommerce_app/models/sneaker_model.dart';
 import 'package:ecommerce_app/services/helper.dart';
-import 'package:ecommerce_app/widgets/stager_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
-import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 class ProductByCart extends StatefulWidget {
   const ProductByCart({super.key});
@@ -111,57 +109,20 @@ class _ProductByCartState extends State<ProductByCart>
             ),
             Padding(
               padding: EdgeInsets.only(
-                top: size.height * 0.2,
+                top: size.height * 0.175,
                 left: 16,
                 right: 12,
               ),
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  FutureBuilder<List<Sneakers>>(
-                    future: _male,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        return Text("Error: ${snapshot.error}");
-                      } else {
-                        final male = snapshot.data;
-                        return StaggeredGridView.countBuilder(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 20,
-                          mainAxisSpacing: 16,
-                          scrollDirection: Axis.vertical,
-                          itemCount: male!.length,
-                          staggeredTileBuilder: (index) => StaggeredTile.extent(
-                            (index % 2 == 0) ? 1 : 1,
-                            (index % 4 == 1 || index % 4 == 3)
-                                ? size.height * 0.35
-                                : size.height * 0.32,
-                          ),
-                          itemBuilder: (context, index) {
-                            final shoe = snapshot.data![index];
-                            return StagerTile(
-                              imageUrl: shoe.imageUrl[1],
-                              name: shoe.name,
-                              price: shoe.price,
-                            );
-                          },
-                        );
-                      }
-                    },
-                  ),
-                  Container(
-                    height: 400,
-                    width: 300,
-                    color: Colors.green,
-                  ),
-                  Container(
-                    height: 400,
-                    width: 300,
-                    color: Colors.blue,
-                  ),
-                ],
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    MenLatestShoes(male: _male, size: size),
+                    MenLatestShoes(male: _female, size: size),
+                    MenLatestShoes(male: _kids, size: size),
+                  ],
+                ),
               ),
             )
           ],
