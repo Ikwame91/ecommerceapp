@@ -2,6 +2,8 @@ import 'package:ecommerce_app/components/men_latest_shoes.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
 import 'package:ecommerce_app/models/sneaker_model.dart';
 import 'package:ecommerce_app/services/helper.dart';
+import 'package:ecommerce_app/widgets/custom_button.dart';
+import 'package:ecommerce_app/widgets/custom_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
@@ -75,7 +77,9 @@ class _ProductByCartState extends State<ProductByCart>
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            filter();
+                          },
                           child: const Icon(
                             FontAwesome.sliders,
                             color: Colors.white,
@@ -123,6 +127,74 @@ class _ProductByCartState extends State<ProductByCart>
                     MenLatestShoes(male: _kids, size: size),
                   ],
                 ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<dynamic> filter() {
+    Size size = MediaQuery.of(context).size;
+    return showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.white.withOpacity(0.5),
+      context: context,
+      builder: (context) => Container(
+        height: size.height * 0.82,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+        ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              height: 5,
+              width: 40,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Colors.black),
+            ),
+            SizedBox(
+              height: size.height * 0.7,
+              child: Column(
+                children: [
+                  const CustomSpacer(),
+                  Text(
+                    'Filter',
+                    style: appstyle(20, Colors.black, FontWeight.bold),
+                  ),
+                  const CustomSpacer(),
+                  Text(
+                    'Gender',
+                    style: appstyle(17, Colors.black, FontWeight.bold),
+                  ),
+                  const CustomSpacer(),
+                  const Row(
+                    children: [
+                      CustomButton(
+                        buttonColor: Colors.black,
+                        label: "Men",
+                      ),
+                      CustomButton(
+                        buttonColor: Colors.grey,
+                        label: "Women",
+                      ),
+                      CustomButton(
+                        buttonColor: Colors.grey,
+                        label: "Kids",
+                      )
+                    ],
+                  )
+                ],
               ),
             )
           ],
