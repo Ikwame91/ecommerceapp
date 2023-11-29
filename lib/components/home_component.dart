@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/components/product_by_cart.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
 import 'package:ecommerce_app/models/sneaker_model.dart';
 import 'package:ecommerce_app/widgets/latest_shoes.dart';
@@ -10,8 +11,9 @@ class HomeComponent extends StatelessWidget {
     super.key,
     required this.size,
     required Future<List<Sneakers>> male,
+    required this.tabIndex,
   }) : _male = male;
-
+  final int tabIndex;
   final Size size;
   final Future<List<Sneakers>> _male;
 
@@ -63,21 +65,31 @@ class HomeComponent extends StatelessWidget {
                       FontWeight.bold,
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Show All',
-                        style: appstyle(
-                          22,
-                          Colors.black,
-                          FontWeight.w500,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductByCart(
+                                    tabIndex: tabIndex,
+                                  )));
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          'Show All',
+                          style: appstyle(
+                            22,
+                            Colors.black,
+                            FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      const Icon(
-                        AntDesign.caretright,
-                        size: 20,
-                      )
-                    ],
+                        const Icon(
+                          AntDesign.caretright,
+                          size: 20,
+                        )
+                      ],
+                    ),
                   ),
                 ],
               )

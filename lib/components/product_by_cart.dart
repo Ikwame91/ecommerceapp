@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 class ProductByCart extends StatefulWidget {
-  const ProductByCart({super.key});
-
+  const ProductByCart({super.key, required this.tabIndex});
+  final int tabIndex;
   @override
   State<ProductByCart> createState() => _ProductByCartState();
 }
@@ -42,6 +42,12 @@ class _ProductByCartState extends State<ProductByCart>
     getKids();
   }
 
+  List<String> brand = [
+    "assets/images/adidas.png",
+    "assets/images/nike.png",
+    "assets/images/gucci.png",
+    "assets/images/jordan.png",
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -89,25 +95,26 @@ class _ProductByCartState extends State<ProductByCart>
                     ),
                   ),
                   TabBar(
-                      padding: EdgeInsets.zero,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      indicatorColor: Colors.transparent,
-                      controller: _tabController,
-                      isScrollable: true,
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.grey,
-                      labelStyle: appstyle(24, Colors.white, FontWeight.bold),
-                      tabs: const [
-                        Tab(
-                          text: 'Men Shoes',
-                        ),
-                        Tab(
-                          text: 'Women Shoes',
-                        ),
-                        Tab(
-                          text: 'Kids Shoes',
-                        ),
-                      ]),
+                    padding: EdgeInsets.zero,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicatorColor: Colors.transparent,
+                    controller: _tabController,
+                    isScrollable: true,
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.grey,
+                    labelStyle: appstyle(24, Colors.white, FontWeight.bold),
+                    tabs: const [
+                      Tab(
+                        text: 'Men Shoes',
+                      ),
+                      Tab(
+                        text: 'Women Shoes',
+                      ),
+                      Tab(
+                        text: 'Kids Shoes',
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -122,7 +129,10 @@ class _ProductByCartState extends State<ProductByCart>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    MenLatestShoes(male: _male, size: size),
+                    MenLatestShoes(
+                      male: _male,
+                      size: size,
+                    ),
                     MenLatestShoes(male: _female, size: size),
                     MenLatestShoes(male: _kids, size: size),
                   ],
@@ -136,6 +146,7 @@ class _ProductByCartState extends State<ProductByCart>
   }
 
   Future<dynamic> filter() {
+    double value = 100;
     Size size = MediaQuery.of(context).size;
     return showModalBottomSheet(
       isScrollControlled: true,
@@ -164,7 +175,7 @@ class _ProductByCartState extends State<ProductByCart>
                   color: Colors.black),
             ),
             SizedBox(
-              height: size.height * 0.7,
+              height: size.height * 0.8,
               child: Column(
                 children: [
                   const CustomSpacer(),
@@ -193,6 +204,75 @@ class _ProductByCartState extends State<ProductByCart>
                         label: "Kids",
                       )
                     ],
+                  ),
+                  const CustomSpacer(),
+                  Text(
+                    'Category',
+                    style: appstyle(17, Colors.black, FontWeight.bold),
+                  ),
+                  const CustomSpacer(),
+                  const Row(
+                    children: [
+                      CustomButton(
+                        buttonColor: Colors.black,
+                        label: "Shoes",
+                      ),
+                      CustomButton(
+                        buttonColor: Colors.grey,
+                        label: "Apparels",
+                      ),
+                      CustomButton(
+                        buttonColor: Colors.grey,
+                        label: "Accessories",
+                      )
+                    ],
+                  ),
+                  const CustomSpacer(),
+                  Text(
+                    'Price',
+                    style: appstyle(20, Colors.black, FontWeight.bold),
+                  ),
+                  const CustomSpacer(),
+                  Slider(
+                    value: value,
+                    max: 500,
+                    activeColor: Colors.black,
+                    thumbColor: Colors.black,
+                    inactiveColor: Colors.grey,
+                    divisions: 50,
+                    label: value.toString(),
+                    secondaryTrackValue: 200,
+                    onChanged: (double value) {},
+                  ),
+                  const CustomSpacer(),
+                  Text(
+                    'Brand',
+                    style: appstyle(20, Colors.black, FontWeight.bold),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    height: 100,
+                    child: ListView.builder(
+                      itemCount: brand.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(14))),
+                            child: Image.asset(
+                              brand[index],
+                              height: 80,
+                              width: 80,
+                              color: Colors.black,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   )
                 ],
               ),
