@@ -26,6 +26,7 @@ class MenLatestShoes extends StatelessWidget {
         } else {
           final male = snapshot.data;
           return StaggeredGridView.countBuilder(
+            padding: EdgeInsets.zero,
             crossAxisCount: 2,
             crossAxisSpacing: 20,
             mainAxisSpacing: 16,

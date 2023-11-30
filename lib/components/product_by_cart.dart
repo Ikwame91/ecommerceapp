@@ -95,10 +95,10 @@ class _ProductByCartState extends State<ProductByCart>
                     ),
                   ),
                   TabBar(
+                    controller: _tabController,
                     padding: EdgeInsets.zero,
                     indicatorSize: TabBarIndicatorSize.label,
                     indicatorColor: Colors.transparent,
-                    controller: _tabController,
                     isScrollable: true,
                     labelColor: Colors.white,
                     unselectedLabelColor: Colors.grey,

@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/components/product_by_cart.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
 import 'package:ecommerce_app/models/sneaker_model.dart';
+import 'package:ecommerce_app/ui/product_screen_details.dart';
 import 'package:ecommerce_app/widgets/latest_shoes.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,11 @@ class HomeComponent extends StatelessWidget {
     required Future<List<Sneakers>> male,
     required this.tabIndex,
   }) : _male = male;
-  final int tabIndex;
+
   final Size size;
   final Future<List<Sneakers>> _male;
+
+  final int tabIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +40,21 @@ class HomeComponent extends StatelessWidget {
                   itemCount: male!.length,
                   itemBuilder: (context, index) {
                     final shoe = snapshot.data![index];
-                    return ProductCard(
-                      price: "\$${shoe.price}",
-                      category: shoe.category,
-                      name: shoe.name,
-                      id: shoe.id,
-                      image: shoe.imageUrl[0],
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductDetails(
+                                    id: shoe.id, category: shoe.category)));
+                      },
+                      child: ProductCard(
+                        price: "\$${shoe.price}",
+                        category: shoe.category,
+                        name: shoe.name,
+                        id: shoe.id,
+                        image: shoe.imageUrl[0],
+                      ),
                     );
                   },
                 );
@@ -70,9 +82,8 @@ class HomeComponent extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProductByCart(
-                                    tabIndex: tabIndex,
-                                  )));
+                              builder: (context) =>
+                                  ProductByCart(tabIndex: tabIndex)));
                     },
                     child: Row(
                       children: [

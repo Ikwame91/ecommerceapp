@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/controllers/mainscreen_provider.dart';
+import 'package:ecommerce_app/controllers/productscreen_provider.dart';
 import 'package:ecommerce_app/ui/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,9 @@ void main() {
       providers: [
         ChangeNotifierProvider(
           create: (context) => MainScreenNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProductScreenNotifier(),
         ),
       ],
       child: const MyApp(),
