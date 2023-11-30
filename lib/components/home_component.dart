@@ -87,7 +87,7 @@ class HomeComponent extends StatelessWidget {
                         const Icon(
                           AntDesign.caretright,
                           size: 20,
-                        )
+                        ),
                       ],
                     ),
                   ),
