@@ -46,7 +46,6 @@ class HomeComponent extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         productNotifier.shoeSizes = shoe.sizes;
-                        print(productNotifier.shoeSizes);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
