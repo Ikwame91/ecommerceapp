@@ -1,11 +1,13 @@
 import 'package:ecommerce_app/components/product_by_cart.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
+import 'package:ecommerce_app/controllers/productscreen_provider.dart';
 import 'package:ecommerce_app/models/sneaker_model.dart';
 import 'package:ecommerce_app/ui/product_screen_details.dart';
 import 'package:ecommerce_app/widgets/latest_shoes.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:provider/provider.dart';
 
 class HomeComponent extends StatelessWidget {
   const HomeComponent({
@@ -22,6 +24,7 @@ class HomeComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductScreenNotifier>(context);
     return Column(
       children: [
         SizedBox(
@@ -42,6 +45,8 @@ class HomeComponent extends StatelessWidget {
                     final shoe = snapshot.data![index];
                     return GestureDetector(
                       onTap: () {
+                        productNotifier.shoeSizes = shoe.sizes;
+                        print(productNotifier.shoeSizes);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
