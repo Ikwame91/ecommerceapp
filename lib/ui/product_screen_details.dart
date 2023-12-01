@@ -3,10 +3,12 @@ import 'package:ecommerce_app/constants/appstyle.dart';
 import 'package:ecommerce_app/controllers/productscreen_provider.dart';
 import 'package:ecommerce_app/models/sneaker_model.dart';
 import 'package:ecommerce_app/services/helper.dart';
+import 'package:ecommerce_app/widgets/checkout_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -19,7 +21,9 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  final PageController _pageController = PageController();
   late Future<Sneakers> _sneakers;
+  final _cartBox = Hive.box('cart_box');
 
   void getShoes() {
     final helper = Helper();
@@ -28,6 +32,10 @@ class _ProductDetailsState extends State<ProductDetails> {
         : widget.category == "Women's Running"
             ? helper.getFemaleSneakersById(widget.id)
             : helper.getKidsSneakersById(widget.id);
+  }
+
+  Future<void> _createCart(Map<String, dynamic> newCart) async {
+    await _cartBox.add(newCart);
   }
 
   @override
@@ -85,7 +93,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       pinned: true,
                       snap: false,
                       floating: true,
-                      backgroundColor: Colors.transparent,
+                      backgroundColor: Colors.yellow.shade500,
                       expandedHeight: size.height * 0.32,
                       flexibleSpace: FlexibleSpaceBar(
                         background: Stack(
@@ -94,6 +102,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               height: size.height * 0.5,
                               width: size.width,
                               child: PageView.builder(
+                                controller: _pageController,
                                 scrollDirection: Axis.horizontal,
                                 itemCount: sneaker!.imageUrl.length,
                                 onPageChanged: (page) {
@@ -123,7 +132,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         bottom: 0,
                                         right: 0,
                                         left: 0,
-                                        height: size.height * 0.15,
+                                        height: size.height * 0.12,
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -320,6 +329,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               ),
                                               selected: size['isSelected'],
                                               onSelected: (newState) {
+                                                if (productNotifier.sizes
+                                                    .contains(size['size'])) {
+                                                  productNotifier.sizes
+                                                      .remove(size['size']);
+                                                } else {
+                                                  productNotifier.sizes
+                                                      .add(size['size']);
+                                                }
+
                                                 productNotifier
                                                     .toggleCheck(index);
                                               },
@@ -369,6 +387,35 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   sneaker.description,
                                   style: appstyle(
                                       14, Colors.black, FontWeight.normal),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 12),
+                                    child: CheckoutButton(
+                                        onTap: () async {
+                                          final newCart = {
+                                            'id': sneaker.id,
+                                            'name': sneaker.name,
+                                            'price': sneaker.price,
+                                            'category': sneaker.category,
+                                            'image': sneaker.imageUrl[0],
+                                            'size': productNotifier.sizes,
+                                            'quantity': 1,
+                                          };
+                                          Navigator.pop(context);
+                                          productNotifier.sizes.clear();
+                                          await _createCart(newCart);
+                                        },
+                                        label: "Add to cart",
+                                        size: size),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
                                 ),
                               ],
                             ),
