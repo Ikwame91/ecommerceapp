@@ -26,7 +26,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     _sneakers = widget.category == "Men's Running"
         ? helper.getMaleSneakersById(widget.id)
         : widget.category == "Women's Running"
-            ? helper.getMaleSneakersById(widget.id)
+            ? helper.getFemaleSneakersById(widget.id)
             : helper.getKidsSneakersById(widget.id);
   }
 
@@ -380,8 +380,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       style: appstyle(
                                           14, Colors.black, FontWeight.normal),
                                     ),
-                                    Text(
-                                        'hsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss')
                                   ],
                                 ),
                               ),
