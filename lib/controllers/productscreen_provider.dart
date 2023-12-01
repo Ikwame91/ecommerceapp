@@ -13,8 +13,6 @@ class ProductScreenNotifier extends ChangeNotifier {
   List<dynamic> get shoeSizes => _shoeSizes;
 
   set shoeSizes(List<dynamic> newShoeSizes) {
-    //
-
     _shoeSizes = newShoeSizes;
     notifyListeners();
   }

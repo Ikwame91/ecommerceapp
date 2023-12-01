@@ -39,6 +39,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -105,17 +111,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       HomeComponent(
                         size: size,
                         male: _male,
-                        tabIndex: _tabController.index,
+                        tabIndex: 0,
                       ),
                       HomeComponent(
                         size: size,
                         male: _female,
-                        tabIndex: _tabController.index,
+                        tabIndex: 1,
                       ),
                       HomeComponent(
                         size: size,
                         male: _kids,
-                        tabIndex: _tabController.index,
+                        tabIndex: 2,
                       )
                     ],
                   ),

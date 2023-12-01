@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/controllers/mainscreen_provider.dart';
 import 'package:ecommerce_app/controllers/productscreen_provider.dart';
+import 'package:ecommerce_app/controllers/tabs_prodivier.dart';
 import 'package:ecommerce_app/ui/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => ProductScreenNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TabsNotifiier(),
         ),
       ],
       child: const MyApp(),

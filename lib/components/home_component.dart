@@ -25,6 +25,7 @@ class HomeComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var productNotifier = Provider.of<ProductScreenNotifier>(context);
+
     return Column(
       children: [
         SizedBox(
