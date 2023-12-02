@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/components/product_by_cart.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
 import 'package:ecommerce_app/controllers/productscreen_provider.dart';
+import 'package:ecommerce_app/controllers/tabs_prodivier.dart';
 import 'package:ecommerce_app/models/sneaker_model.dart';
 import 'package:ecommerce_app/ui/product_screen_details.dart';
 import 'package:ecommerce_app/widgets/latest_shoes.dart';
@@ -85,10 +86,17 @@ class HomeComponent extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ProductByCart(tabIndex: tabIndex)));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            var tabNotifier = Provider.of<TabsNotifiier>(
+                                context,
+                                listen: false);
+                            return ProductByCart(
+                                tabIndex: tabNotifier.firstTab);
+                          },
+                        ),
+                      );
                     },
                     child: Row(
                       children: [
