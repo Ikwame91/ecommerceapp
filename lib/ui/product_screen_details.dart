@@ -304,7 +304,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         scrollDirection: Axis.horizontal,
                                         padding: EdgeInsets.zero,
                                         itemBuilder: (context, index) {
-                                          final sizes =
+                                          final shoeSizes =
                                               productNotifier.shoeSizess[index];
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
@@ -321,23 +321,24 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               selectedColor: Colors.black,
                                               disabledColor: Colors.white,
                                               label: Text(
-                                                sizes['size'],
+                                                shoeSizes['size'],
                                                 style: appstyle(
                                                     18,
-                                                    sizes['isSelected']
+                                                    shoeSizes['isSelected']
                                                         ? Colors.white
                                                         : Colors.black,
                                                     FontWeight.w600),
                                               ),
-                                              selected: sizes['isSelected'],
+                                              selected: shoeSizes['isSelected'],
                                               onSelected: (newState) {
                                                 if (productNotifier.sizes
-                                                    .contains(sizes['size'])) {
-                                                  productNotifier.sizes
-                                                      .remove(sizes['size']);
+                                                    .contains(
+                                                        shoeSizes['size'])) {
+                                                  productNotifier.sizes.remove(
+                                                      shoeSizes['size']);
                                                 } else {
                                                   productNotifier.sizes
-                                                      .add(sizes['size']);
+                                                      .add(shoeSizes['size']);
                                                 }
                                                 if (kDebugMode) {
                                                   print(productNotifier.sizes);
@@ -408,7 +409,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             'price': sneaker.price,
                                             'category': sneaker.category,
                                             'imageUrl': sneaker.imageUrl[0],
-                                            'sizes': productNotifier.sizes,
+                                            'size': productNotifier.sizes,
                                             'quantity': 1,
                                           });
                                           List<dynamic> cartItems =

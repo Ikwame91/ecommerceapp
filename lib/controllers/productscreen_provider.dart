@@ -17,7 +17,7 @@ class ProductScreenNotifier extends ChangeNotifier {
   List<String> _sizes = [];
   List<String> get sizes => _sizes;
 
-  set sizes(List<String> newSizes) {
+  set sizess(List<String> newSizes) {
     _sizes = newSizes;
     notifyListeners();
   }
