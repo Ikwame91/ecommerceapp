@@ -90,8 +90,8 @@ class HomeComponent extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) {
                             var tabNotifier = Provider.of<TabsNotifiier>(
-                                context,
-                                listen: false);
+                              context,
+                            );
                             return ProductByCart(
                                 tabIndex: tabNotifier.firstTab);
                           },

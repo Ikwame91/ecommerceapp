@@ -52,7 +52,9 @@ class _ProductDetailsState extends State<ProductDetails> {
       future: _sneakers,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const CircularProgressIndicator(
+            backgroundColor: Colors.amber,
+          );
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else {
@@ -73,7 +75,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pop(context);
-                                productNotifier.shoeSizes.clear();
+                                productNotifier.shoeSizess.clear();
                               },
                               child: const Icon(
                                 AntDesign.close,
@@ -298,12 +300,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       height: 40,
                                       child: ListView.builder(
                                         itemCount:
-                                            productNotifier.shoeSizes.length,
+                                            productNotifier.shoeSizess.length,
                                         scrollDirection: Axis.horizontal,
                                         padding: EdgeInsets.zero,
                                         itemBuilder: (context, index) {
-                                          final size =
-                                              productNotifier.shoeSizes[index];
+                                          final sizes =
+                                              productNotifier.shoeSizess[index];
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8.0),
@@ -319,23 +321,26 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               selectedColor: Colors.black,
                                               disabledColor: Colors.white,
                                               label: Text(
-                                                size['size'],
+                                                sizes['size'],
                                                 style: appstyle(
                                                     18,
-                                                    size['isSelected']
+                                                    sizes['isSelected']
                                                         ? Colors.white
                                                         : Colors.black,
                                                     FontWeight.w600),
                                               ),
-                                              selected: size['isSelected'],
+                                              selected: sizes['isSelected'],
                                               onSelected: (newState) {
                                                 if (productNotifier.sizes
-                                                    .contains(size['size'])) {
+                                                    .contains(sizes['size'])) {
                                                   productNotifier.sizes
-                                                      .remove(size['size']);
+                                                      .remove(sizes['size']);
                                                 } else {
                                                   productNotifier.sizes
-                                                      .add(size['size']);
+                                                      .add(sizes['size']);
+                                                }
+                                                if (kDebugMode) {
+                                                  print(productNotifier.sizes);
                                                 }
 
                                                 productNotifier
@@ -397,18 +402,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     padding: const EdgeInsets.only(top: 12),
                                     child: CheckoutButton(
                                         onTap: () async {
-                                          final newCart = {
+                                          _createCart({
                                             'id': sneaker.id,
                                             'name': sneaker.name,
                                             'price': sneaker.price,
                                             'category': sneaker.category,
-                                            'image': sneaker.imageUrl[0],
-                                            'size': productNotifier.sizes,
+                                            'imageUrl': sneaker.imageUrl[0],
+                                            'sizes': productNotifier.sizes,
                                             'quantity': 1,
-                                          };
+                                          });
+                                          List<dynamic> cartItems =
+                                              _cartBox.values.toList();
+                                          print("Cart Items: $cartItems");
+
                                           Navigator.pop(context);
                                           productNotifier.sizes.clear();
-                                          await _createCart(newCart);
+                                          // await _createCart(newCart);
                                         },
                                         label: "Add to cart",
                                         size: size),

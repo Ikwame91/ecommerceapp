@@ -4,10 +4,8 @@ class ProductScreenNotifier extends ChangeNotifier {
   int _activepage = 0;
 
   //
-  List<dynamic> _shoeSizes = [];
 
   //
-  List<String> _sizes = [];
 
   int get activepage => _activepage;
   set activePage(int newIndex) {
@@ -16,6 +14,7 @@ class ProductScreenNotifier extends ChangeNotifier {
   }
 
 //
+  List<String> _sizes = [];
   List<String> get sizes => _sizes;
 
   set sizes(List<String> newSizes) {
@@ -23,17 +22,20 @@ class ProductScreenNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<dynamic> get shoeSizes => _shoeSizes;
+  //////////////////////////////////////
+  List<dynamic> _shoeSizess = [];
+
+  List<dynamic> get shoeSizess => _shoeSizess;
 
   set shoeSizes(List<dynamic> newShoeSizes) {
-    _shoeSizes = newShoeSizes;
+    _shoeSizess = newShoeSizes;
     notifyListeners();
   }
 
   void toggleCheck(int index) {
-    for (int i = 0; i < _shoeSizes.length; i++) {
+    for (int i = 0; i < _shoeSizess.length; i++) {
       if (i == index) {
-        _shoeSizes[i]["isSelected"] = !_shoeSizes[i]["isSelected"];
+        _shoeSizess[i]["isSelected"] = !_shoeSizess[i]["isSelected"];
       }
     }
     notifyListeners();
