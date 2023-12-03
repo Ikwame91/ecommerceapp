@@ -230,9 +230,6 @@ class CartScreen extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
-              height: 20,
-            ),
             Align(
               alignment: Alignment.bottomCenter,
               child: CheckoutButton(

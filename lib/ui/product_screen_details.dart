@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
+import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/controllers/productscreen_provider.dart';
 import 'package:ecommerce_app/models/sneaker_model.dart';
 import 'package:ecommerce_app/services/helper.dart';
+import 'package:ecommerce_app/ui/favorites.dart';
 import 'package:ecommerce_app/widgets/checkout_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,27 @@ class _ProductDetailsState extends State<ProductDetails> {
   final PageController _pageController = PageController();
   late Future<Sneakers> _sneakers;
   final _cartBox = Hive.box('cart_box');
+  final _favBox = Hive.box("fav_box");
+
+  Future<void> _createFav(Map<String, dynamic> addFav) async {
+    await _favBox.add(addFav);
+    getFavorites();
+  }
+
+  getFavorites() {
+    final favData = _favBox.keys.map((key) {
+      final item = _favBox.get(key);
+
+      return {
+        "key": key,
+        "id": item['id'],
+      };
+    }).toList();
+
+    favor = favData.toList();
+    ids = favor.map((item) => item['id']).toList();
+    setState(() {});
+  }
 
   void getShoes() {
     final helper = Helper();
@@ -110,7 +133,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 onPageChanged: (page) {
                                   productNotifier.activePage = page;
                                 },
-                                itemBuilder: (context, index) {
+                                itemBuilder: (context, int index) {
                                   return Stack(
                                     children: [
                                       Container(
@@ -122,13 +145,30 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           fit: BoxFit.contain,
                                         ),
                                       ),
-                                      const Positioned(
+                                      Positioned(
                                         top: 60,
                                         right: 20,
-                                        child: Icon(
-                                          AntDesign.hearto,
-                                          color: Colors.black,
-                                        ),
+                                        child: GestureDetector(
+                                            onTap: () async {
+                                              if (ids.contains(widget.id)) {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const Favorites()));
+                                              } else {
+                                                _createFav({
+                                                  "id": widget.id,
+                                                  "name": sneaker.name,
+                                                  "image": sneaker.imageUrl[0],
+                                                  "price": sneaker.price,
+                                                  "category": sneaker.category,
+                                                });
+                                              }
+                                            },
+                                            child: ids.contains(sneaker.id)
+                                                ? const Icon(AntDesign.heart)
+                                                : const Icon(AntDesign.hearto)),
                                       ),
                                       Positioned(
                                         bottom: 0,
