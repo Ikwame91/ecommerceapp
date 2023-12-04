@@ -94,7 +94,7 @@ class _ProductCardState extends State<ProductCard> {
                               _createFav({
                                 "id": widget.id,
                                 "name": widget.name,
-                                "image": widget.image,
+                                "imageUrl": widget.image,
                                 "price": widget.price,
                                 "category": widget.category,
                               });

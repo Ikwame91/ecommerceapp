@@ -13,6 +13,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     List<dynamic> cart = [];
+
     final cartData = _cartBox.keys.map((key) {
       final item = _cartBox.get(key);
       return {
@@ -105,24 +106,25 @@ class CartScreen extends StatelessWidget {
                                     Row(
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.all(12),
-                                          child: data['imageUrl'] != null
-                                              ? CachedNetworkImage(
-                                                  imageUrl: data['imageUrl'],
-                                                  width: 70,
-                                                  height: 70,
-                                                  fit: BoxFit.fill,
-                                                )
-                                              : Container(
-                                                  color: Colors.grey.shade300,
-                                                  width: 70,
-                                                  height: 70,
-                                                  child: const Icon(
-                                                    Ionicons.image_outline,
-                                                    color: Colors.grey,
-                                                    size: 30,
-                                                  )),
-                                        ),
+                                            padding: const EdgeInsets.all(12),
+                                            child:
+                                                //  data['imageUrl'] != null
+                                                CachedNetworkImage(
+                                              imageUrl: data['imageUrl'],
+                                              width: 70,
+                                              height: 70,
+                                              fit: BoxFit.fill,
+                                            )
+                                            // : Container(
+                                            //     color: Colors.grey.shade300,
+                                            //     width: 70,
+                                            //     height: 70,
+                                            //     child: const Icon(
+                                            //       Ionicons.image_outline,
+                                            //       color: Colors.grey,
+                                            //       size: 30,
+                                            //     )),
+                                            ),
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               top: 12, left: 20),
@@ -176,7 +178,7 @@ class CartScreen extends StatelessWidget {
                                                     width: 20,
                                                   ),
                                                   Text(
-                                                    "Size:",
+                                                    "Size",
                                                     style: appstyle(
                                                         16,
                                                         Colors.grey,
