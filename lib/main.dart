@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/controllers/favorites_notifier.dart';
 import 'package:ecommerce_app/controllers/mainscreen_provider.dart';
 import 'package:ecommerce_app/controllers/productscreen_provider.dart';
 import 'package:ecommerce_app/controllers/tabs_prodivier.dart';
@@ -23,6 +24,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => TabsNotifiier(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FavoritesNotifier(),
         ),
       ],
       child: const MyApp(),

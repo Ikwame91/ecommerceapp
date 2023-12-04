@@ -22,8 +22,8 @@ class CartScreen extends StatelessWidget {
         "name": item['name'],
         "price": item['price'],
         "imageUrl": item['imageUrl'],
-        "sizes": item['sizes'] ?? [],
         "quantity": item['quantity'],
+        "sizes": item['sizes'],
       };
     }).toList();
     cart = cartData.reversed.toList();
@@ -132,12 +132,18 @@ class CartScreen extends StatelessWidget {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                data['name'],
-                                                style: appstyle(
-                                                    18,
-                                                    Colors.black,
-                                                    FontWeight.bold),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      data['name'],
+                                                      style: appstyle(
+                                                          18,
+                                                          Colors.black,
+                                                          FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                               const SizedBox(
                                                 height: 5,
@@ -170,7 +176,7 @@ class CartScreen extends StatelessWidget {
                                                     width: 5,
                                                   ),
                                                   Text(
-                                                    "Sizes: ${data['sizes']?.join(', ') ?? 'N/A'}",
+                                                    "${data['sizes']?.join(', ') ?? 'N/A'}",
                                                   )
                                                 ],
                                               )

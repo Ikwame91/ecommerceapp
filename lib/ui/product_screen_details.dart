@@ -49,12 +49,19 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   void getShoes() {
-    final helper = Helper();
-    _sneakers = widget.category == "Men's Running"
-        ? helper.getMaleSneakersById(widget.id)
-        : widget.category == "Women's Running"
-            ? helper.getFemaleSneakersById(widget.id)
-            : helper.getKidsSneakersById(widget.id);
+    if (widget.category == "Men's Running") {
+      _sneakers = Helper().getMaleSneakersById(widget.id);
+    } else if (widget.category == "Women's Running") {
+      _sneakers = Helper().getFemaleSneakersById(widget.id);
+    } else {
+      _sneakers = Helper().getKidsSneakersById(widget.id);
+    }
+    // final helper = Helper();
+    // _sneakers = widget.category == "Men's Running"
+    //     ? helper.getMaleSneakersById(widget.id)
+    //     : widget.category == "Women's Running"
+    //         ? helper.getFemaleSneakersById(widget.id)
+    //         : helper.getKidsSneakersById(widget.id);
   }
 
   Future<void> _createCart(Map<String, dynamic> newCart) async {
@@ -424,16 +431,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         14, Colors.black, FontWeight.normal),
                                   ),
                                 ),
-                                Text(
-                                  sneaker.description,
-                                  style: appstyle(
-                                      14, Colors.black, FontWeight.normal),
-                                ),
-                                Text(
-                                  sneaker.description,
-                                  style: appstyle(
-                                      14, Colors.black, FontWeight.normal),
-                                ),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -449,12 +446,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             'price': sneaker.price,
                                             'category': sneaker.category,
                                             'imageUrl': sneaker.imageUrl[0],
-                                            'size': productNotifier.sizes,
+                                            'sizes': productNotifier.sizes,
                                             'quantity': 1,
                                           });
                                           List<dynamic> cartItems =
                                               _cartBox.values.toList();
-                                          print("Cart Items: $cartItems");
+                                          if (kDebugMode) {
+                                            print("Cart Items: $cartItems");
+                                          }
 
                                           Navigator.pop(context);
                                           productNotifier.sizes.clear();
