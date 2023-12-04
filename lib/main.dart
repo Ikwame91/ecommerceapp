@@ -5,6 +5,7 @@ import 'package:ecommerce_app/controllers/productscreen_provider.dart';
 import 'package:ecommerce_app/controllers/tabs_prodivier.dart';
 import 'package:ecommerce_app/ui/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
@@ -44,12 +45,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Nkay Comerce',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: MainScreen());
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Nkay Comerce',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: MainScreen());
+      },
+    );
   }
 }

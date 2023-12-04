@@ -56,12 +56,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     } else {
       _sneakers = Helper().getKidsSneakersById(widget.id);
     }
-    // final helper = Helper();
-    // _sneakers = widget.category == "Men's Running"
-    //     ? helper.getMaleSneakersById(widget.id)
-    //     : widget.category == "Women's Running"
-    //         ? helper.getFemaleSneakersById(widget.id)
-    //         : helper.getKidsSneakersById(widget.id);
   }
 
   Future<void> _createCart(Map<String, dynamic> newCart) async {

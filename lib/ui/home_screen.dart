@@ -3,6 +3,7 @@ import 'package:ecommerce_app/constants/appstyle.dart';
 import 'package:ecommerce_app/controllers/productscreen_provider.dart';
 import 'package:ecommerce_app/controllers/tabs_prodivier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,7 +34,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Scaffold(
         backgroundColor: const Color(0xFFE2E2E2),
         body: SizedBox(
-          height: size.height,
+          height: 812.h,
+          width: 375.w,
           child: Stack(
             children: [
               Container(
