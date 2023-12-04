@@ -1,33 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
+import 'package:ecommerce_app/controllers/cart_provider.dart';
+import 'package:ecommerce_app/ui/main_screen.dart';
 import 'package:ecommerce_app/widgets/checkout_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 
-class CartScreen extends StatelessWidget {
-  CartScreen({super.key});
-  final _cartBox = Hive.box('cart_box');
+class CartScreen extends StatefulWidget {
+  const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    List<dynamic> cart = [];
+    var cartProvider = Provider.of<CartProvider>(context);
+    cartProvider.getCart();
 
-    final cartData = _cartBox.keys.map((key) {
-      final item = _cartBox.get(key);
-      return {
-        "key": key,
-        "id": item['id'],
-        "category": item['category'],
-        "name": item['name'],
-        "price": item['price'],
-        "imageUrl": item['imageUrl'],
-        "quantity": item['quantity'],
-        "sizes": item['sizes'],
-      };
-    }).toList();
-    cart = cartData.reversed.toList();
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: Padding(
@@ -60,10 +54,10 @@ class CartScreen extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.7,
                   child: ListView.builder(
-                      itemCount: cart.length,
+                      itemCount: cartProvider.cart.length,
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
-                        final data = cart[index];
+                        final data = cartProvider.cart[index];
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ClipRRect(
@@ -75,7 +69,15 @@ class CartScreen extends StatelessWidget {
                                 children: [
                                   SlidableAction(
                                     flex: 1,
-                                    onPressed: (context) {},
+                                    onPressed: (context) {
+                                      cartProvider.deleteCart(data['key']);
+                                      cartProvider.getCart();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MainScreen()));
+                                    },
                                     backgroundColor: Colors.red,
                                     foregroundColor: Colors.white,
                                     icon: Ionicons.trash_outline,
@@ -106,25 +108,24 @@ class CartScreen extends StatelessWidget {
                                     Row(
                                       children: [
                                         Padding(
-                                            padding: const EdgeInsets.all(12),
-                                            child:
-                                                //  data['imageUrl'] != null
-                                                CachedNetworkImage(
-                                              imageUrl: data['imageUrl'],
-                                              width: 70,
-                                              height: 70,
-                                              fit: BoxFit.fill,
-                                            )
-                                            // : Container(
-                                            //     color: Colors.grey.shade300,
-                                            //     width: 70,
-                                            //     height: 70,
-                                            //     child: const Icon(
-                                            //       Ionicons.image_outline,
-                                            //       color: Colors.grey,
-                                            //       size: 30,
-                                            //     )),
-                                            ),
+                                          padding: const EdgeInsets.all(12),
+                                          child: data['imageUrl'] != null
+                                              ? CachedNetworkImage(
+                                                  imageUrl: data['imageUrl'],
+                                                  width: 70,
+                                                  height: 70,
+                                                  fit: BoxFit.fill,
+                                                )
+                                              : Container(
+                                                  color: Colors.grey.shade300,
+                                                  width: 70,
+                                                  height: 70,
+                                                  child: const Icon(
+                                                    Ionicons.image_outline,
+                                                    color: Colors.grey,
+                                                    size: 30,
+                                                  )),
+                                        ),
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               top: 12, left: 20),

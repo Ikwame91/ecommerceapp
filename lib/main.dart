@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/controllers/cart_provider.dart';
 import 'package:ecommerce_app/controllers/favorites_notifier.dart';
 import 'package:ecommerce_app/controllers/mainscreen_provider.dart';
 import 'package:ecommerce_app/controllers/productscreen_provider.dart';
@@ -27,6 +28,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => FavoritesNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
         ),
       ],
       child: const MyApp(),
