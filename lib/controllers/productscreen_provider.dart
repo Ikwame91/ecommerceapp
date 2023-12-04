@@ -1,5 +1,3 @@
-import 'package:ecommerce_app/models/sneaker_model.dart';
-import 'package:ecommerce_app/services/helper.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreenNotifier extends ChangeNotifier {
@@ -18,22 +16,6 @@ class ProductScreenNotifier extends ChangeNotifier {
 //
   List<String> _sizes = [];
   List<String> get sizes => _sizes;
-
-//
-  late Future<List<Sneakers>> male;
-  late Future<List<Sneakers>> female;
-  late Future<List<Sneakers>> kids;
-  void getMale() {
-    male = Helper().getMaleSneakers();
-  }
-
-  void getFemale() {
-    female = Helper().getFemaleSneakers();
-  }
-
-  void getKids() {
-    kids = Helper().getKidSneakers();
-  }
 
   set sizess(List<String> newSizes) {
     _sizes = newSizes;
