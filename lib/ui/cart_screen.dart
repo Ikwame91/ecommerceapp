@@ -84,7 +84,7 @@ class CartScreen extends StatelessWidget {
                               ),
                               child: Container(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.15,
+                                    MediaQuery.of(context).size.height * 0.157,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
                                   color: Colors.grey.shade100,
@@ -121,7 +121,7 @@ class CartScreen extends StatelessWidget {
                                                     Ionicons.image_outline,
                                                     color: Colors.grey,
                                                     size: 30,
-                                                  )), // or any other widget you want to show for null
+                                                  )),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
@@ -134,13 +134,22 @@ class CartScreen extends StatelessWidget {
                                             children: [
                                               Row(
                                                 children: [
-                                                  Expanded(
+                                                  Container(
+                                                    constraints:
+                                                        const BoxConstraints(
+                                                      maxWidth: 160,
+                                                    ),
                                                     child: Text(
                                                       data['name'],
                                                       style: appstyle(
-                                                          18,
-                                                          Colors.black,
-                                                          FontWeight.bold),
+                                                        18,
+                                                        Colors.black,
+                                                        FontWeight.bold,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      softWrap: false,
+                                                      maxLines: 2,
                                                     ),
                                                   ),
                                                 ],
@@ -153,6 +162,7 @@ class CartScreen extends StatelessWidget {
                                                 style: appstyle(14, Colors.grey,
                                                     FontWeight.w600),
                                               ),
+                                              const SizedBox(),
                                               Row(
                                                 children: [
                                                   Text(
