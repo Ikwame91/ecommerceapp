@@ -104,6 +104,8 @@ class _ProductByCartState extends State<ProductByCart>
                       ),
                     ),
                     TabBar(
+                      tabAlignment: TabAlignment.start,
+                      dividerColor: Colors.transparent,
                       controller: _tabController,
                       padding: EdgeInsets.zero,
                       indicatorSize: TabBarIndicatorSize.label,
@@ -142,8 +144,14 @@ class _ProductByCartState extends State<ProductByCart>
                         male: _male,
                         size: size,
                       ),
-                      MenLatestShoes(male: _female, size: size),
-                      MenLatestShoes(male: _kids, size: size),
+                      MenLatestShoes(
+                        male: _female,
+                        size: size,
+                      ),
+                      MenLatestShoes(
+                        male: _kids,
+                        size: size,
+                      ),
                     ],
                   ),
                 ),

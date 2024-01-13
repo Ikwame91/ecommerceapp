@@ -52,90 +52,105 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: const Color(0xFFE2E2E2),
-        body: SizedBox(
-          height: 812.h,
-          width: 375.w,
-          child: Stack(
-            children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(16, 40, 0, 0),
-                height: size.height * 0.4,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/top_image.png'),
-                        fit: BoxFit.cover)),
-                child: SizedBox(
-                  width: size.width,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Sporting Shoe',
-                        style:
-                            appstyletwo(42, Colors.white, FontWeight.bold, 1.5),
-                      ),
-                      Text('Collection',
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: 812.h,
+            width: 375.w,
+            child: Stack(
+              children: [
+                Container(
+                  padding: const EdgeInsets.fromLTRB(16, 40, 0, 0),
+                  height: size.height * 0.4,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/top_image.png'),
+                          fit: BoxFit.cover)),
+                  child: SizedBox(
+                    width: size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Sporting Shoe',
                           style: appstyletwo(
-                              35, Colors.white, FontWeight.bold, 1.2)),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      TabBar(
-                        padding: EdgeInsets.zero,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        indicatorColor: Colors.transparent,
-                        controller: _tabController,
-                        isScrollable: true,
-                        labelColor: Colors.white,
-                        unselectedLabelColor: Colors.grey,
-                        labelStyle: appstyle(24, Colors.white, FontWeight.bold),
-                        tabs: const [
-                          Tab(
-                            text: 'Men Shoes',
+                              42, Colors.white, FontWeight.bold, 1.5),
+                        ),
+                        Text(
+                          'Collection',
+                          style: appstyletwo(
+                            35,
+                            Colors.white,
+                            FontWeight.bold,
+                            1.2,
                           ),
-                          Tab(
-                            text: 'Women Shoes',
-                          ),
-                          Tab(
-                            text: 'Kids Shoes',
-                          ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        TabBar(
+                          tabAlignment: TabAlignment.start,
+                          dividerColor: Colors.transparent,
+                          indicator: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.grey.shade800),
+                          labelPadding: const EdgeInsets.only(right: 20),
+                          padding: EdgeInsets.zero,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          indicatorColor: Colors.transparent,
+                          controller: _tabController,
+                          isScrollable: true,
+                          labelColor: Colors.white,
+                          unselectedLabelColor: Colors.grey,
+                          labelStyle:
+                              appstyle(24, Colors.white, FontWeight.bold),
+                          tabs: const [
+                            Tab(
+                              text: 'Men Shoes',
+                            ),
+                            Tab(
+                              text: 'Women Shoes',
+                            ),
+                            Tab(
+                              text: 'Kids Shoes',
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: size.height * 0.3),
-                child: Container(
-                  padding: const EdgeInsets.only(left: 12),
-                  child: Consumer<TabsNotifiier>(
-                    builder: (context, tabsNotifier, child) {
-                      return TabBarView(
-                        controller: _tabController,
-                        children: [
-                          HomeComponent(
-                            size: size,
-                            male: _male,
-                            tabIndex: tabsNotifier.firstTab == 0 ? 0 : -1,
-                          ),
-                          HomeComponent(
-                            size: size,
-                            male: _female,
-                            tabIndex: tabsNotifier.firstTab == 1 ? 1 : -1,
-                          ),
-                          HomeComponent(
-                            size: size,
-                            male: _kids,
-                            tabIndex: tabsNotifier.firstTab == 2 ? 2 : -1,
-                          ),
-                        ],
-                      );
-                    },
+                Padding(
+                  padding: EdgeInsets.only(top: size.height * 0.3),
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Consumer<TabsNotifiier>(
+                      builder: (context, tabsNotifier, child) {
+                        return TabBarView(
+                          controller: _tabController,
+                          children: [
+                            HomeComponent(
+                              size: size,
+                              male: _male,
+                              tabIndex: tabsNotifier.firstTab == 0 ? 0 : -1,
+                            ),
+                            HomeComponent(
+                              size: size,
+                              male: _female,
+                              tabIndex: tabsNotifier.firstTab == 1 ? 1 : -1,
+                            ),
+                            HomeComponent(
+                              size: size,
+                              male: _kids,
+                              tabIndex: tabsNotifier.firstTab == 2 ? 2 : -1,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ));
   }
