@@ -1,11 +1,9 @@
 import 'package:ecommerce_app/components/home_component.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
-import 'package:ecommerce_app/controllers/tabs_prodivier.dart';
 import 'package:ecommerce_app/models/sneaker_model.dart';
 import 'package:ecommerce_app/services/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -123,29 +121,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   padding: EdgeInsets.only(top: size.height * 0.3),
                   child: Container(
                     padding: const EdgeInsets.only(left: 12),
-                    child: Consumer<TabsNotifiier>(
-                      builder: (context, tabsNotifier, child) {
-                        return TabBarView(
-                          controller: _tabController,
-                          children: [
-                            HomeComponent(
-                              size: size,
-                              male: _male,
-                              tabIndex: tabsNotifier.firstTab == 0 ? 0 : -1,
-                            ),
-                            HomeComponent(
-                              size: size,
-                              male: _female,
-                              tabIndex: tabsNotifier.firstTab == 1 ? 1 : -1,
-                            ),
-                            HomeComponent(
-                              size: size,
-                              male: _kids,
-                              tabIndex: tabsNotifier.firstTab == 2 ? 2 : -1,
-                            ),
-                          ],
-                        );
-                      },
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        HomeComponent(
+                          size: size,
+                          male: _male,
+                          tabIndex: 0,
+                        ),
+                        HomeComponent(
+                          size: size,
+                          male: _female,
+                          tabIndex: 1,
+                        ),
+                        HomeComponent(
+                          size: size,
+                          male: _kids,
+                          tabIndex: 2,
+                        ),
+                      ],
                     ),
                   ),
                 )

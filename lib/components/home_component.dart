@@ -20,8 +20,9 @@ class HomeComponent extends StatelessWidget {
 
   final Size size;
   final Future<List<Sneakers>> _male;
-
   final int tabIndex;
+
+  
 
   @override
   Widget build(BuildContext context) {
