@@ -43,4 +43,8 @@ class CartProvider extends ChangeNotifier {
     _counter--;
     notifyListeners();
   }
+
+  Future<void> createCart(Map<String, dynamic> newCart) async {
+    await _cartBox.add(newCart);
+  }
 }

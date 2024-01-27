@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/models/sneaker_model.dart';
+import 'package:ecommerce_app/services/helper.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreenNotifier extends ChangeNotifier {
@@ -20,6 +22,32 @@ class ProductScreenNotifier extends ChangeNotifier {
   set sizess(List<String> newSizes) {
     _sizes = newSizes;
     notifyListeners();
+  }
+
+  late Future<List<Sneakers>> male;
+  late Future<List<Sneakers>> female;
+  late Future<List<Sneakers>> kids;
+  late Future<Sneakers> sneakers;
+  void getMale() {
+    male = Helper().getMaleSneakers();
+  }
+
+  void getFemale() {
+    female = Helper().getFemaleSneakers();
+  }
+
+  void getKids() {
+    kids = Helper().getKidSneakers();
+  }
+
+  void getShoes(String category, String id) {
+    if (category == "Men's Running") {
+      sneakers = Helper().getMaleSneakersById(id);
+    } else if (category == "Women's Running") {
+      sneakers = Helper().getFemaleSneakersById(id);
+    } else {
+      sneakers = Helper().getKidsSneakersById(id);
+    }
   }
 
   //////////////////////////////////////

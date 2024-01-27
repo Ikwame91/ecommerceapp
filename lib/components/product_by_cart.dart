@@ -1,8 +1,6 @@
 import 'package:ecommerce_app/components/men_latest_shoes.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
-import 'package:ecommerce_app/controllers/tabs_prodivier.dart';
-import 'package:ecommerce_app/models/sneaker_model.dart';
-import 'package:ecommerce_app/services/helper.dart';
+import 'package:ecommerce_app/controllers/productscreen_provider.dart';
 import 'package:ecommerce_app/widgets/custom_button.dart';
 import 'package:ecommerce_app/widgets/custom_spacer.dart';
 import 'package:flutter/material.dart';
@@ -21,29 +19,6 @@ class _ProductByCartState extends State<ProductByCart>
   late final TabController _tabController =
       TabController(length: 3, vsync: this);
 
-  late Future<List<Sneakers>> _male;
-  late Future<List<Sneakers>> _female;
-  late Future<List<Sneakers>> _kids;
-  void getMale() {
-    _male = Helper().getMaleSneakers();
-  }
-
-  void getFemale() {
-    _female = Helper().getFemaleSneakers();
-  }
-
-  void getKids() {
-    _kids = Helper().getKidSneakers();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getMale();
-    getFemale();
-    getKids();
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -59,108 +34,110 @@ class _ProductByCartState extends State<ProductByCart>
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Consumer<TabsNotifiier>(builder: (context, tabNotifier, child) {
-      return Scaffold(
-        backgroundColor: const Color(0xFFE2E2E2),
-        body: SizedBox(
-          height: size.height,
-          child: Stack(
-            children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(16, 40, 0, 0),
-                height: size.height * 0.4,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/top_image.png'),
-                      fit: BoxFit.fill),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(6, 12, 16, 18),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Icon(
-                              AntDesign.close,
-                              color: Colors.white,
-                            ),
+    var productNotifier = Provider.of<ProductScreenNotifier>(context);
+    productNotifier.getMale();
+    productNotifier.getFemale();
+    productNotifier.getKids();
+    return Scaffold(
+      backgroundColor: const Color(0xFFE2E2E2),
+      body: SizedBox(
+        height: size.height,
+        child: Stack(
+          children: [
+            Container(
+              padding: const EdgeInsets.fromLTRB(16, 40, 0, 0),
+              height: size.height * 0.4,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/top_image.png'),
+                    fit: BoxFit.fill),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(6, 12, 16, 18),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            AntDesign.close,
+                            color: Colors.white,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              filter();
-                            },
-                            child: const Icon(
-                              FontAwesome.sliders,
-                              color: Colors.white,
-                            ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            filter();
+                          },
+                          child: const Icon(
+                            FontAwesome.sliders,
+                            color: Colors.white,
                           ),
-                        ],
-                      ),
-                    ),
-                    TabBar(
-                      tabAlignment: TabAlignment.start,
-                      dividerColor: Colors.transparent,
-                      controller: _tabController,
-                      padding: EdgeInsets.zero,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      indicatorColor: Colors.transparent,
-                      isScrollable: true,
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.grey,
-                      labelStyle: appstyle(24, Colors.white, FontWeight.bold),
-                      tabs: const [
-                        Tab(
-                          text: 'Men Shoes',
-                        ),
-                        Tab(
-                          text: 'Women Shoes',
-                        ),
-                        Tab(
-                          text: 'Kids Shoes',
                         ),
                       ],
+                    ),
+                  ),
+                  TabBar(
+                    tabAlignment: TabAlignment.start,
+                    dividerColor: Colors.transparent,
+                    controller: _tabController,
+                    padding: EdgeInsets.zero,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicatorColor: Colors.transparent,
+                    isScrollable: true,
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.grey,
+                    labelStyle: appstyle(24, Colors.white, FontWeight.bold),
+                    tabs: const [
+                      Tab(
+                        text: 'Men Shoes',
+                      ),
+                      Tab(
+                        text: 'Women Shoes',
+                      ),
+                      Tab(
+                        text: 'Kids Shoes',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: size.height * 0.175,
+                left: 16,
+                right: 12,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    MenLatestShoes(
+                      male: productNotifier.male,
+                      size: size,
+                    ),
+                    MenLatestShoes(
+                      male: productNotifier.female,
+                      size: size,
+                    ),
+                    MenLatestShoes(
+                      male: productNotifier.kids,
+                      size: size,
                     ),
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: size.height * 0.175,
-                  left: 16,
-                  right: 12,
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      MenLatestShoes(
-                        male: _male,
-                        size: size,
-                      ),
-                      MenLatestShoes(
-                        male: _female,
-                        size: size,
-                      ),
-                      MenLatestShoes(
-                        male: _kids,
-                        size: size,
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
-      );
-    });
+      ),
+    );
   }
 
   Future<dynamic> filter() {

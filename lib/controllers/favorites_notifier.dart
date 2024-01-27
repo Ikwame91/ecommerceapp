@@ -5,6 +5,7 @@ class FavoritesNotifier extends ChangeNotifier {
   final _favBox = Hive.box('fav_box');
   List<dynamic> _ids = [];
   List<dynamic> _favorites = [];
+  List<dynamic> _fav = [];
 
   List<dynamic> get ids => _ids;
 
@@ -17,6 +18,12 @@ class FavoritesNotifier extends ChangeNotifier {
 
   set favorites(List<dynamic> newFav) {
     _favorites = newFav;
+    notifyListeners();
+  }
+
+  List<dynamic> get fav => _fav;
+  set favs(List<dynamic> newFavs) {
+    _favorites = newFavs;
     notifyListeners();
   }
 
@@ -53,10 +60,28 @@ class FavoritesNotifier extends ChangeNotifier {
         "quantity": item['quantity'],
       };
     }).toList();
-    _favorites = favdata.reversed.toList();
+    _fav = favdata.reversed.toList();
   }
 
   Future<void> deleteFav(int key) async {
     await _favBox.delete(key);
   }
+
+  Future<void> createFav(Map<String, dynamic> addFav) async {
+    await _favBox.add(addFav);
+  }
+
+  // getFavorites() {
+  //   final favData = _favBox.keys.map((key) {
+  //     final item = _favBox.get(key);
+
+  //     return {
+  //       "key": key,
+  //       "id": item['id'],
+  //     };
+  //   }).toList();
+
+  //   favor = favData.toList();
+  //   ids = favor.map((item) => item['id']).toList();
+  //   setState(() {});
 }

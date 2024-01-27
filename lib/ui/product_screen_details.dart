@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
+import 'package:ecommerce_app/controllers/cart_provider.dart';
 import 'package:ecommerce_app/controllers/favorites_notifier.dart';
 import 'package:ecommerce_app/controllers/productscreen_provider.dart';
 import 'package:ecommerce_app/models/sneaker_model.dart';
@@ -26,11 +27,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   final PageController _pageController = PageController();
   late Future<Sneakers> _sneakers;
   final _cartBox = Hive.box('cart_box');
-  final _favBox = Hive.box("fav_box");
-
-  Future<void> _createFav(Map<String, dynamic> addFav) async {
-    await _favBox.add(addFav);
-  }
 
   void getShoes() {
     if (widget.category == "Men's Running") {
@@ -40,10 +36,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     } else {
       _sneakers = Helper().getKidsSneakersById(widget.id);
     }
-  }
-
-  Future<void> _createCart(Map<String, dynamic> newCart) async {
-    await _cartBox.add(newCart);
   }
 
   @override
@@ -58,7 +50,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     var favoritesNotifier =
         Provider.of<FavoritesNotifier>(context, listen: true);
     favoritesNotifier.getFavorites();
-
+    var cartNotifier = Provider.of<CartProvider>(context);
     return FutureBuilder<Sneakers>(
       future: _sneakers,
       builder: (context, snapshot) {
@@ -150,7 +142,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                               const Favorites()),
                                                     );
                                                   } else {
-                                                    _createFav({
+                                                    favoritesNotifier
+                                                        .createFav({
                                                       "id": widget.id,
                                                       "name": sneaker.name,
                                                       "image":
@@ -433,7 +426,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     padding: const EdgeInsets.only(top: 12),
                                     child: CheckoutButton(
                                         onTap: () async {
-                                          _createCart({
+                                          cartNotifier.createCart({
                                             'id': sneaker.id,
                                             'name': sneaker.name,
                                             'price': sneaker.price,

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
-import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/controllers/favorites_notifier.dart';
 import 'package:ecommerce_app/ui/main_screen.dart';
 import 'package:flutter/material.dart';
@@ -46,9 +45,9 @@ class _FavoritesState extends State<Favorites> {
           Padding(
               padding: const EdgeInsets.only(top: 85),
               child: ListView.builder(
-                  itemCount: favNotifier.favorites.length,
+                  itemCount: favNotifier.fav.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final shoe = favNotifier.favorites[index];
+                    final shoe = favNotifier.fav[index];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ClipRRect(
@@ -130,7 +129,7 @@ class _FavoritesState extends State<Favorites> {
                                 child: GestureDetector(
                                   onTap: () {
                                     favNotifier.deleteFav(shoe["key"]);
-                                    ids.removeWhere(
+                                    favNotifier.ids.removeWhere(
                                         (element) => element == shoe['id']);
                                     Navigator.push(
                                         context,

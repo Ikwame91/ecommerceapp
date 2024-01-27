@@ -1,9 +1,9 @@
 import 'package:ecommerce_app/components/home_component.dart';
 import 'package:ecommerce_app/constants/appstyle.dart';
-import 'package:ecommerce_app/models/sneaker_model.dart';
-import 'package:ecommerce_app/services/helper.dart';
+import 'package:ecommerce_app/controllers/productscreen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,29 +16,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late final TabController _tabController =
       TabController(length: 3, vsync: this);
 
-  late Future<List<Sneakers>> _male;
-  late Future<List<Sneakers>> _female;
-  late Future<List<Sneakers>> _kids;
-  void getMale() {
-    _male = Helper().getMaleSneakers();
-  }
-
-  void getFemale() {
-    _female = Helper().getFemaleSneakers();
-  }
-
-  void getKids() {
-    _kids = Helper().getKidSneakers();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getMale();
-    getFemale();
-    getKids();
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -47,6 +24,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductScreenNotifier>(context);
+    productNotifier.getMale();
+    productNotifier.getFemale();
+    productNotifier.getKids();
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: const Color(0xFFE2E2E2),
@@ -126,17 +108,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       children: [
                         HomeComponent(
                           size: size,
-                          male: _male,
+                          male: productNotifier.male,
                           tabIndex: 0,
                         ),
                         HomeComponent(
                           size: size,
-                          male: _female,
+                          male: productNotifier.female,
                           tabIndex: 1,
                         ),
                         HomeComponent(
                           size: size,
-                          male: _kids,
+                          male: productNotifier.kids,
                           tabIndex: 2,
                         ),
                       ],
