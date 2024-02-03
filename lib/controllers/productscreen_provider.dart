@@ -40,7 +40,7 @@ class ProductScreenNotifier extends ChangeNotifier {
     kids = Helper().getKidSneakers();
   }
 
-  void getShoes(String category, String id) {
+  Future<void> getShoes(String category, String id) async {
     if (category == "Men's Running") {
       sneakers = Helper().getMaleSneakersById(id);
     } else if (category == "Women's Running") {
